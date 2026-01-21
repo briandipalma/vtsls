@@ -153,10 +153,33 @@ Or if the plugin resides elsewhere, typically when you want to test a plugin wit
 ]
 ```
 
-### Log
+### Log/Debug server
 
 - Set `typescript.tsserver.log` in configuration
 - Execute command `typescript.openTsServerLog`
+
+<details>
+
+`nvim/after/lsp/vtsls.lua`
+
+```lua
+return {
+	settings = {
+		typescript = {
+			tsserver = { log = "verbose" },
+		},
+	},
+	on_attach = function(client, bufnr)
+		vim.keymap.set("n", "<leader>l", function()
+			client:exec_cmd({
+				command = "typescript.openTsServerLog",
+			}, { bufnr = vim.api.nvim_get_current_buf() })
+		end, { buffer = bufnr, desc = "Open log" })
+	end,
+}
+```
+
+</details>
 
 ## Editor Integration
 
